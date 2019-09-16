@@ -42,3 +42,7 @@ ttc-lidar: build
 .PHONY: ttc-camera
 ttc-camera: build
 	$(call run_docker, /bin/bash -c 'cd TTC_camera/dat && ../../build/TTC_camera/compute_ttc_camera')
+
+.PHONY: gaussian-smoothing
+gaussian-smoothing: build
+	$(call run_docker, /bin/bash -c 'cd gradient_filtering/images && ../../build/gradient_filtering/gaussian_smoothing')

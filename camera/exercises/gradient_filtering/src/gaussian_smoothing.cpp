@@ -1,5 +1,6 @@
 #include <iostream>
 #include <numeric>
+#include <array>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -9,20 +10,35 @@ using namespace std;
 void gaussianSmoothing1()
 {
     // load image from file
-    cv::Mat img;
-    img = cv::imread("../images/img1gray.png");
+    cv::Mat img = cv::imread("../images/img1gray.png");
 
     // create filter kernel
-    float gauss_data[25] = {1, 4, 7, 4, 1,
-                            4, 16, 26, 16, 4,
-                            7, 26, 41, 26, 7,
-                            4, 16, 26, 16, 4,
-                            1, 4, 7, 4, 1};
-    cv::Mat kernel = cv::Mat(5, 5, CV_32F, gauss_data);
+    constexpr std::size_t kernel_size = 5U;
+    constexpr std::size_t kernel_elements = kernel_size * kernel_size;
+    std::array<float, kernel_elements> gauss_kernel =
+    {
+        1.0F,  4.0F,  7.0F,  4.0F, 1.0F,
+        4.0F, 16.0F, 26.0F, 16.0F, 4.0F,
+        7.0F, 26.0F, 41.0F, 26.0F, 7.0F,
+        4.0F, 16.0F, 26.0F, 16.0F, 4.0F,
+        1.0F,  4.0F,  7.0F,  4.0F, 1.0F
+    };
+
+    const float kernel_sum = std::accumulate(gauss_kernel.begin(), gauss_kernel.end(), 0.0F);
+    for (float& kernel_element : gauss_kernel)
+    {
+        kernel_element /= kernel_sum;
+    }
+
+    cv::Mat kernel(kernel_size, kernel_size, CV_32F, gauss_kernel.data());
 
     // apply filter
-    cv::Mat result;
-    cv::filter2D(img, result, -1, kernel, cv::Point(-1, -1), 0, cv::BORDER_DEFAULT);
+    cv::Mat result(img.rows, img.cols, img.type());
+    const int ddepth = -1;
+    const cv::Point anchor = cv::Point(-1, -1);
+    const double delta = 0.0;
+    const int border_type = cv::BORDER_DEFAULT;
+    cv::filter2D(img, result, ddepth, kernel, anchor, delta, border_type);
 
     // show result
     string windowName = "Gaussian Blurring";
