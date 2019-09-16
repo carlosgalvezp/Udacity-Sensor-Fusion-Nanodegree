@@ -14,3 +14,7 @@ clean:
 build:
 	mkdir -p build
 	$(call run_docker, /bin/bash -c 'cd build && cmake .. && make -j8')
+
+.PHONY: create-matrix
+create-matrix: build
+	$(call run_docker, /bin/bash -c './build/OpenCV_exercises/create_matrix')
