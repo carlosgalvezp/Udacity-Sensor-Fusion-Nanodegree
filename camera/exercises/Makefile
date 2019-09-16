@@ -62,3 +62,7 @@ cornerness-harris: build
 .PHONY: detect-keypoints
 detect-keypoints: build
 	$(call run_docker, /bin/bash -c 'cd detect_keypoints/images && ../../build/detect_keypoints/detect_keypoints')
+
+.PHONY: describe-keypoints
+describe-keypoints: build
+	$(call run_docker, /bin/bash -c 'cd describe_keypoints/images && ../../build/describe_keypoints/describe_keypoints')
