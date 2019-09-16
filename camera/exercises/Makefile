@@ -18,3 +18,7 @@ build:
 .PHONY: create-matrix
 create-matrix: build
 	$(call run_docker, /bin/bash -c './build/OpenCV_exercises/create_matrix')
+
+.PHONY: change-pixels
+change-pixels: build
+	$(call run_docker, /bin/bash -c './build/OpenCV_exercises/change_pixels')
