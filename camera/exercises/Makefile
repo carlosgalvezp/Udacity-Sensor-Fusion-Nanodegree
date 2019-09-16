@@ -38,3 +38,7 @@ load-image-3: build
 .PHONY: ttc-lidar
 ttc-lidar: build
 	$(call run_docker, /bin/bash -c 'cd TTC_lidar/dat && ../../build/TTC_lidar/compute_ttc_lidar')
+
+.PHONY: ttc-camera
+ttc-camera: build
+	$(call run_docker, /bin/bash -c 'cd TTC_camera/dat && ../../build/TTC_camera/compute_ttc_camera')

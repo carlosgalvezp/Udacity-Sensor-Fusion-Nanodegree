@@ -8,6 +8,25 @@
 
 using namespace std;
 
+double median(std::vector<double>& data)
+{
+    std::sort(data.begin(), data.end());
+    double output = 0.0;
+
+    const std::size_t size = data.size();
+
+    if ((size % 2U) == 0U)
+    {
+        output = 0.5 * (data[(size / 2U) - 1U] + data[size / 2U]);
+    }
+    else
+    {
+        output = data[size / 2U];
+    }
+
+    return output;
+}
+
 // Compute time-to-collision (TTC) based on keypoint correspondences in successive images
 void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPoint> &kptsCurr,
                       std::vector<cv::DMatch> kptMatches, double frameRate, double &TTC)
@@ -51,7 +70,7 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
     }
 
     // compute camera-based TTC from distance ratios
-    double meanDistRatio = std::accumulate(distRatios.begin(), distRatios.end(), 0.0) / distRatios.size();
+    double meanDistRatio = median(distRatios);
 
     double dT = 1 / frameRate;
     TTC = -dT / (1 - meanDistRatio);
@@ -67,7 +86,7 @@ int main()
 
     vector<cv::DMatch> matches;
     readKptMatches("../dat/C23A5_KptMatches_AKAZE.dat", matches); // readKptMatches("./dat/C23A5_KptMatches_SHI-BRISK.dat", matches);
-    double ttc; 
+    double ttc;
     computeTTCCamera(kptsSource, kptsRef, matches, 10.0, ttc);
     cout << "ttc = " << ttc << "s" << endl;
 }
