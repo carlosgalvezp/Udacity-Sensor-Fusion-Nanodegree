@@ -58,3 +58,7 @@ magnitude-sobel: build
 .PHONY: cornerness-harris
 cornerness-harris: build
 	$(call run_docker, /bin/bash -c 'cd cornerness_harris/images && ../../build/cornerness_harris/cornerness_harris')
+
+.PHONY: detect-keypoints
+detect-keypoints: build
+	$(call run_docker, /bin/bash -c 'cd detect_keypoints/images && ../../build/detect_keypoints/detect_keypoints')
