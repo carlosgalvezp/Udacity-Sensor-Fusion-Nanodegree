@@ -31,6 +31,10 @@ void loadImage3()
     {
 
         // STUDENT TASK : Prevent image 7 from being displayed
+        if (it == (imgList.begin() + 2))  // being() starts at image 5
+        {
+            continue;
+        }
 
         // display image
         cv::imshow(windowName, *it);
