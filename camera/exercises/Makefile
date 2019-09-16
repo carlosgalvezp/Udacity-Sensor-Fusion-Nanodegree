@@ -34,3 +34,7 @@ load-image-2: build
 .PHONY: load-image-3
 load-image-3: build
 	$(call run_docker, /bin/bash -c 'cd OpenCV_exercises/images && ../../build/OpenCV_exercises/load_image_3')
+
+.PHONY: ttc-lidar
+ttc-lidar: build
+	$(call run_docker, /bin/bash -c 'cd TTC_lidar/dat && ../../build/TTC_lidar/compute_ttc_lidar')
