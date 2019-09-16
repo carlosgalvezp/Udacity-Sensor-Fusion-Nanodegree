@@ -54,3 +54,7 @@ gradient-sobel: build
 .PHONY: magnitude-sobel
 magnitude-sobel: build
 	$(call run_docker, /bin/bash -c 'cd gradient_filtering/images && ../../build/gradient_filtering/magnitude_sobel')
+
+.PHONY: cornerness-harris
+cornerness-harris: build
+	$(call run_docker, /bin/bash -c 'cd cornerness_harris/images && ../../build/cornerness_harris/cornerness_harris')
