@@ -46,3 +46,11 @@ ttc-camera: build
 .PHONY: gaussian-smoothing
 gaussian-smoothing: build
 	$(call run_docker, /bin/bash -c 'cd gradient_filtering/images && ../../build/gradient_filtering/gaussian_smoothing')
+
+.PHONY: gradient-sobel
+gradient-sobel: build
+	$(call run_docker, /bin/bash -c 'cd gradient_filtering/images && ../../build/gradient_filtering/gradient_sobel')
+
+.PHONY: magnitude-sobel
+magnitude-sobel: build
+	$(call run_docker, /bin/bash -c 'cd gradient_filtering/images && ../../build/gradient_filtering/magnitude_sobel')
