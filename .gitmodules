@@ -1,3 +1,6 @@
 [submodule "lidar/SFND_Lidar_Obstacle_Detection"]
 	path = lidar/SFND_Lidar_Obstacle_Detection
 	url = git@github.com:carlosgalvezp/SFND_Lidar_Obstacle_Detection.git
+[submodule "camera/SFND_2D_Feature_Tracking"]
+	path = camera/SFND_2D_Feature_Tracking
+	url = git@github.com:carlosgalvezp/SFND_2D_Feature_Tracking.git
