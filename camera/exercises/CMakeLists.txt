@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 add_subdirectory(cornerness_harris)
 add_subdirectory(describe_keypoints)
+add_subdirectory(descriptor_matching)
 add_subdirectory(detect_keypoints)
 add_subdirectory(gradient_filtering)
 add_subdirectory(OpenCV_exercises)

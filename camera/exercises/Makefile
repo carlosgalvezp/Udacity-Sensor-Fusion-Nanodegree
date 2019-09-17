@@ -66,3 +66,7 @@ detect-keypoints: build
 .PHONY: describe-keypoints
 describe-keypoints: build
 	$(call run_docker, /bin/bash -c 'cd describe_keypoints/images && ../../build/describe_keypoints/describe_keypoints')
+
+.PHONY: descriptor-matching
+descriptor-matching: build
+	$(call run_docker, /bin/bash -c 'cd descriptor_matching/images && ../../build/descriptor_matching/descriptor_matching')
