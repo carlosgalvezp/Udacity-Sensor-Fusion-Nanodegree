@@ -14,12 +14,12 @@ void loadCalibrationData(cv::Mat &P_rect_00, cv::Mat &R_rect_00, cv::Mat &RT)
     RT.at<double>(1,0) = 1.480249e-02; RT.at<double>(1,1) = 7.280733e-04; RT.at<double>(1,2) = -9.998902e-01; RT.at<double>(1,3) = -7.631618e-02;
     RT.at<double>(2,0) = 9.998621e-01; RT.at<double>(2,1) = 7.523790e-03; RT.at<double>(2,2) = 1.480755e-02; RT.at<double>(2,3) = -2.717806e-01;
     RT.at<double>(3,0) = 0.0; RT.at<double>(3,1) = 0.0; RT.at<double>(3,2) = 0.0; RT.at<double>(3,3) = 1.0;
-    
+
     R_rect_00.at<double>(0,0) = 9.999239e-01; R_rect_00.at<double>(0,1) = 9.837760e-03; R_rect_00.at<double>(0,2) = -7.445048e-03; R_rect_00.at<double>(0,3) = 0.0;
     R_rect_00.at<double>(1,0) = -9.869795e-03; R_rect_00.at<double>(1,1) = 9.999421e-01; R_rect_00.at<double>(1,2) = -4.278459e-03; R_rect_00.at<double>(1,3) = 0.0;
     R_rect_00.at<double>(2,0) = 7.402527e-03; R_rect_00.at<double>(2,1) = 4.351614e-03; R_rect_00.at<double>(2,2) = 9.999631e-01; R_rect_00.at<double>(2,3) = 0.0;
     R_rect_00.at<double>(3,0) = 0; R_rect_00.at<double>(3,1) = 0; R_rect_00.at<double>(3,2) = 0; R_rect_00.at<double>(3,3) = 1;
-    
+
     P_rect_00.at<double>(0,0) = 7.215377e+02; P_rect_00.at<double>(0,1) = 0.000000e+00; P_rect_00.at<double>(0,2) = 6.095593e+02; P_rect_00.at<double>(0,3) = 0.000000e+00;
     P_rect_00.at<double>(1,0) = 0.000000e+00; P_rect_00.at<double>(1,1) = 7.215377e+02; P_rect_00.at<double>(1,2) = 1.728540e+02; P_rect_00.at<double>(1,3) = 0.000000e+00;
     P_rect_00.at<double>(2,0) = 0.000000e+00; P_rect_00.at<double>(2,1) = 0.000000e+00; P_rect_00.at<double>(2,2) = 1.000000e+00; P_rect_00.at<double>(2,3) = 0.000000e+00;
@@ -40,23 +40,32 @@ void projectLidarToCamera2()
     cv::Mat R_rect_00(4,4,cv::DataType<double>::type); // 3x3 rectifying rotation to make image planes co-planar
     cv::Mat RT(4,4,cv::DataType<double>::type); // rotation matrix and translation vector
     loadCalibrationData(P_rect_00, R_rect_00, RT);
-    
+
     // TODO: project lidar points
     cv::Mat visImg = img.clone();
     cv::Mat overlay = visImg.clone();
 
     cv::Mat X(4,1,cv::DataType<double>::type);
     cv::Mat Y(3,1,cv::DataType<double>::type);
-    for(auto it=lidarPoints.begin(); it!=lidarPoints.end(); ++it) {
+    for(const LidarPoint& lidar_point  : lidarPoints)
+    {
         // 1. Convert current Lidar point into homogeneous coordinates and store it in the 4D variable X.
+        X.at<double>(0, 0) = lidar_point.x;
+        X.at<double>(1, 0) = lidar_point.y;
+        X.at<double>(2, 0) = lidar_point.z;
+        X.at<double>(3, 0) = 1.0;
 
-        // 2. Then, apply the projection equation as detailed in lesson 5.1 to map X onto the image plane of the camera. 
+        // 2. Then, apply the projection equation as detailed in lesson 5.1 to map X onto the image plane of the camera.
         // Store the result in Y.
+        Y = P_rect_00 * R_rect_00 * RT * X;
 
         // 3. Once this is done, transform Y back into Euclidean coordinates and store the result in the variable pt.
-        cv::Point pt;
+        const double y_x = Y.at<double>(0, 0);
+        const double y_y = Y.at<double>(1, 0);
+        const double y_w = Y.at<double>(2, 0);
+        cv::Point pt(y_x/y_w, y_y/y_w);
 
-        float val = it->x;
+        float val = lidar_point.x;
         float maxVal = 20.0;
         int red = min(255, (int)(255 * abs((val - maxVal) / maxVal)));
         int green = min(255, (int)(255 * (1 - abs((val - maxVal) / maxVal))));
@@ -65,7 +74,7 @@ void projectLidarToCamera2()
 
     float opacity = 0.6;
     cv::addWeighted(overlay, opacity, visImg, 1 - opacity, 0, visImg);
-    
+
     string windowName = "LiDAR data on image overlay";
     cv::namedWindow( windowName, 3 );
     cv::imshow( windowName, visImg );
