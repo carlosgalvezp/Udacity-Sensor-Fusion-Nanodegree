@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
+add_subdirectory(cluster_with_roi)
 add_subdirectory(cornerness_harris)
 add_subdirectory(describe_keypoints)
 add_subdirectory(descriptor_matching)

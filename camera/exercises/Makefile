@@ -82,3 +82,7 @@ project-lidar-to-camera: build
 .PHONY: detect-objects
 detect-objects: build
 	$(call run_docker, /bin/bash -c 'cd detect_objects/dat && ../../build/detect_objects/detect_objects')
+
+.PHONY: cluster-with-roi
+cluster-with-roi: build
+	$(call run_docker, /bin/bash -c 'cd cluster_with_roi/dat && ../../build/cluster_with_roi/cluster_with_roi')
