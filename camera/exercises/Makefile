@@ -70,3 +70,7 @@ describe-keypoints: build
 .PHONY: descriptor-matching
 descriptor-matching: build
 	$(call run_docker, /bin/bash -c 'cd descriptor_matching/images && ../../build/descriptor_matching/descriptor_matching')
+
+.PHONY: lidar-to-camera
+lidar-to-camera: build
+	$(call run_docker, /bin/bash -c 'cd lidar_to_camera/dat && ../../build/lidar_to_camera/show_lidar_top_view')

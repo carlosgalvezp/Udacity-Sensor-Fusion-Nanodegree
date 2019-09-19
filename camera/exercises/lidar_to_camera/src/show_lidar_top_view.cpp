@@ -19,21 +19,27 @@ void showLidarTopview()
     // create topview image
     cv::Mat topviewImg(imageSize, CV_8UC3, cv::Scalar(0, 0, 0));
 
+    const float xw_min = 0.0F;
+    const float xw_max = 20.0F;
+
     // plot Lidar points into image
-    for (auto it = lidarPoints.begin(); it != lidarPoints.end(); ++it)
+    for (const LidarPoint& lidar_point : lidarPoints)
     {
-        float xw = (*it).x; // world position in m with x facing forward from sensor
-        float yw = (*it).y; // world position in m with y facing left from sensor
+        float xw = lidar_point.x; // world position in m with x facing forward from sensor
+        float yw = lidar_point.y; // world position in m with y facing left from sensor
 
         int y = (-xw * imageSize.height / worldSize.height) + imageSize.height;
         int x = (-yw * imageSize.height / worldSize.height) + imageSize.width / 2;
 
-        cv::circle(topviewImg, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
-        
-        // TODO: 
-        // 1. Change the color of the Lidar points such that 
+
+        // 1. Change the color of the Lidar points such that
         // X=0.0m corresponds to red while X=20.0m is shown as green.
-        // 2. Remove all Lidar points on the road surface while preserving 
+        const float red = (0.0F - 255.0F) * (xw - xw_min) / (xw_max - xw_min) + 255.0F;
+        const float green = 255.0F - red;
+
+        cv::circle(topviewImg, cv::Point(x, y), 5, cv::Scalar(0, green, red), -1);
+
+        // 2. Remove all Lidar points on the road surface while preserving
         // measurements on the obstacles in the scene.
     }
 
