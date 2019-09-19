@@ -75,6 +75,10 @@ descriptor-matching: build
 lidar-to-camera: build
 	$(call run_docker, /bin/bash -c 'cd lidar_to_camera/dat && ../../build/lidar_to_camera/show_lidar_top_view')
 
-.PHONY: project_lidar_to_camera
-project_lidar_to_camera: build
+.PHONY: project-lidar-to-camera
+project-lidar-to-camera: build
 	$(call run_docker, /bin/bash -c 'cd lidar_to_camera/dat && ../../build/lidar_to_camera/project_lidar_to_camera')
+
+.PHONY: detect-objects
+detect-objects: build
+	$(call run_docker, /bin/bash -c 'cd detect_objects/dat && ../../build/detect_objects/detect_objects')
