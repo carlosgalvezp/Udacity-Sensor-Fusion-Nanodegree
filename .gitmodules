@@ -4,3 +4,6 @@
 [submodule "camera/SFND_2D_Feature_Tracking"]
 	path = camera/SFND_2D_Feature_Tracking
 	url = git@github.com:carlosgalvezp/SFND_2D_Feature_Tracking.git
+[submodule "camera/SFND_3D_Object_Tracking"]
+	path = camera/SFND_3D_Object_Tracking
+	url = git@github.com:carlosgalvezp/SFND_3D_Object_Tracking.git
