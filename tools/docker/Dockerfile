@@ -21,6 +21,7 @@ RUN apt-get update && \
         git \
         libavcodec-dev \
         libavformat-dev \
+        libcanberra-gtk-module \
         libdc1394-22-dev \
         libgtk2.0-dev \
         libjpeg-dev \
@@ -52,6 +53,7 @@ RUN git clone https://github.com/opencv/opencv.git && \
           -D BUILD_TESTS=OFF \
           -D BUILD_DOCS=OFF \
           -D WITH_EIGEN=OFF \
+          -D WITH_QT=ON \
           ..  && \
     make -j8 && \
     make install && \
