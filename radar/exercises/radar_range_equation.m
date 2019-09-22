@@ -20,4 +20,6 @@ c = 3*10^8;
 lambda = c / fc;
 
 % Measure the Maximum Range a Radar can see
-max_range = nthroot((Pt * G^2 * lambda^2 * RCS)/(Ps * (4*pi)^3), 4)
+max_range = nthroot((Pt * G^2 * lambda^2 * RCS)/(Ps * (4*pi)^3), 4);
+
+disp(max_range)
