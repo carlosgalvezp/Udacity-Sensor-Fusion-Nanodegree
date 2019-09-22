@@ -19,7 +19,7 @@ ylabel('X(t)')
 S_fft = fft(S);
 
 % Compute the two-sided spectrum P2. Then compute the single-sided spectrum P1 based on P2 and the even-valued signal length L.
-P2 = abs(S_fft);
+P2 = abs(S_fft / L);
 P1 = P2(1:L/2 + 1);       
 
 % Plotting
