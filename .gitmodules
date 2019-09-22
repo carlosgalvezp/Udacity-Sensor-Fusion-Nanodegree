@@ -7,3 +7,6 @@
 [submodule "camera/SFND_3D_Object_Tracking"]
 	path = camera/SFND_3D_Object_Tracking
 	url = git@github.com:carlosgalvezp/SFND_3D_Object_Tracking.git
+[submodule "radar/SFND_Radar_Target_Generation_and_Detection"]
+	path = radar/SFND_Radar_Target_Generation_and_Detection
+	url = git@github.com:carlosgalvezp/SFND_Radar_Target_Generation_and_Detection.git
