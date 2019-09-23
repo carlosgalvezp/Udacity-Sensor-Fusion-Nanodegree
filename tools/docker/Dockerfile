@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install --assume-yes --no-install-recommends \
         build-essential \
         cmake \
+        gdb \
         libpcl-dev  && \
     rm -rf /var/lib/apt/lists/*
 
