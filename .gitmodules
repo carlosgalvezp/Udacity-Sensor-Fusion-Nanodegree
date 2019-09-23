@@ -10,3 +10,6 @@
 [submodule "radar/SFND_Radar_Target_Generation_and_Detection"]
 	path = radar/SFND_Radar_Target_Generation_and_Detection
 	url = git@github.com:carlosgalvezp/SFND_Radar_Target_Generation_and_Detection.git
+[submodule "kalman_filters/SFND_Unscented_Kalman_Filter"]
+	path = kalman_filters/SFND_Unscented_Kalman_Filter
+	url = git@github.com:carlosgalvezp/SFND_Unscented_Kalman_Filter.git
